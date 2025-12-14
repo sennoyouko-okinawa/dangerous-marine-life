@@ -1,0 +1,100 @@
+{
+  "marineCreatures": [
+    {
+      "id": 1,
+      "name": "ハブクラゲ",
+      "isPoisonous": true,
+      "imageUrl": "images/habukura.jpg"
+    },
+    {
+      "id": 2,
+      "name": "ヒョウモンダコ",
+      "isPoisonous": true,
+      "imageUrl": "images/hyoumodako.jpg"
+    },
+    {
+      "id": 3,
+      "name": "クマノミ",
+      "isPoisonous": true,
+      "imageUrl": "images/kumanomi_fake.jpg"
+    },
+    {
+      "id": 4,
+      "name": "オニダルマオコゼ",
+      "isPoisonous": true,
+      "imageUrl": "images/onidarumaokoze.jpg"
+    },
+    {
+      "id": 5,
+      "name": "ミノカサゴ",
+      "isPoisonous": true,
+      "imageUrl": "images/minokasago.jpg"
+    },
+    {
+      "id": 6,
+      "name": "イモガイ",
+      "isPoisonous": true,
+      "imageUrl": "images/imogai.jpg"
+    },
+    {
+      "id": 7,
+      "name": "フグ",
+      "isPoisonous": true,
+      "imageUrl": "images/fugu.jpg"
+    },
+    {
+      "id": 8,
+      "name": "カツオノエボシ",
+      "isPoisonous": true,
+      "imageUrl": "images/katsuonoeboshi.jpg"
+    },
+    {
+      "id": 101,
+      "name": "ナンヨウハギ",
+      "isPoisonous": false,
+      "imageUrl": "images/nanyouhagi.jpg"
+    },
+    {
+      "id": 102,
+      "name": "アオウミガメ",
+      "isPoisonous": false,
+      "imageUrl": "images/aoumigame.jpg"
+    },
+    {
+      "id": 103,
+      "name": "クマノミ",
+      "isPoisonous": false,
+      "imageUrl": "images/kumanomi_real.jpg"
+    },
+    {
+      "id": 104,
+      "name": "ジンベエザメ",
+      "isPoisonous": false,
+      "imageUrl": "images/jinbee_same.jpg"
+    },
+    {
+      "id": 105,
+      "name": "マンタ",
+      "isPoisonous": false,
+      "imageUrl": "images/manta.jpg"
+    },
+    {
+      "id": 106,
+      "name": "イルカ",
+      "isPoisonous": false,
+      "imageUrl": "images/iruka.jpg"
+    },
+    {
+      "id": 107,
+      "name": "タツノオトシゴ",
+      "isPoisonous": false,
+      "imageUrl": "images/tatsunootoshigo.jpg"
+    },
+    {
+      "id": 108,
+      "name": "ブダイ",
+      "isPoisonous": false,
+      "imageUrl": "images/budai.jpg"
+    }
+  ]
+}

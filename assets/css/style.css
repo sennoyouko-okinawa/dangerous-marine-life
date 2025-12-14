@@ -1,0 +1,104 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+    /* 浅蓝色背景，海洋主题 */
+    color: #333;
+    text-align: center;
+}
+
+header {
+    background-color: #1e90ff;
+    /* 蓝色标题栏 */
+    color: white;
+    padding: 10px 0;
+}
+
+#game-info {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #add8e6;
+    /* 浅一点的蓝色 */
+}
+
+#score-display {
+    font-size: 2em;
+    font-weight: bold;
+    color: #d9534f;
+    /* 红色醒目分数 */
+}
+
+#game-area {
+    /* 核心游戏区域：图片将在此区域内随机定位 */
+    position: relative;
+    width: 90vw;
+    height: 70vh;
+    /* 占据视口大部分高度 */
+    margin: 20px auto;
+    border: 3px dashed #007bff;
+    background-color: #ffffff;
+    overflow: hidden;
+    /* 确保图片不溢出 */
+}
+
+/* 动态生成的图片元素样式 */
+.creature {
+    position: absolute;
+    width: 120px;
+    /* 图片大小 */
+    height: 120px;
+    border-radius: 50%;
+    /* 圆形图片 */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s ease-out;
+    background-size: cover;
+    /* 确保图片覆盖整个元素 */
+    background-position: center;
+    border: 4px solid transparent;
+    /* 默认无边框 */
+}
+
+.creature:hover {
+    transform: scale(1.05);
+}
+
+/* 提示框样式 */
+#message-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 🚨 有毒生物被点击时的短暂视觉反馈 */
+.is-poisonous-feedback {
+    border-color: red !important;
+    animation: flash-red 0.3s;
+}
+
+@keyframes flash-red {
+    0% {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: red;
+        transform: scale(1.1);
+    }
+
+    100% {
+        border-color: transparent;
+    }
+}
