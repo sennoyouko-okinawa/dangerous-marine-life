@@ -16,7 +16,7 @@ let creatureData = [];
 // 异步加载JSON数据
 async function loadCreatureData() {
     try {
-        const response = await fetch('assets/js/marine_creatures.json');
+        const response = await fetch('./assets/js/marine_creatures.json');
         const data = await response.json();
         creatureData = data.marineCreatures;
         return creatureData;
@@ -24,12 +24,12 @@ async function loadCreatureData() {
         console.error('无法加载海洋生物数据:', error);
         // 如果加载失败，则使用默认数据
         creatureData = [
-            { id: 1, name: "ハブクラゲ", isPoisonous: true, imageUrl: 'images/habukura.jpg' },
-            { id: 2, name: "ヒョウモンダコ", isPoisonous: true, imageUrl: 'images/hyoumodako.jpg' },
-            { id: 3, name: "クマノミ", isPoisonous: true, imageUrl: 'images/kumanomi_fake.jpg' },
-            { id: 101, name: "ナンヨウハギ", isPoisonous: false, imageUrl: 'images/nanyouhagi.jpg' },
-            { id: 102, name: "アオウミガメ", isPoisonous: false, imageUrl: 'images/aoumigame.jpg' },
-            { id: 103, name: "クマノミ", isPoisonous: false, imageUrl: 'images/kumanomi_real.jpg' }
+            { id: 1, name: "ハブクラゲ", isPoisonous: true, imageUrl: './assets/images/habukura.jpg' },
+            { id: 2, name: "ヒョウモンダコ", isPoisonous: true, imageUrl: './assets/images/hyoumodako.jpg' },
+            { id: 3, name: "クマノミ", isPoisonous: true, imageUrl: './assets/images/kumanomi_fake.jpg' },
+            { id: 101, name: "ナンヨウハギ", isPoisonous: false, imageUrl: './assets/images/nanyouhagi.jpg' },
+            { id: 102, name: "アオウミガメ", isPoisonous: false, imageUrl: './assets/images/aoumigame.jpg' },
+            { id: 103, name: "クマノミ", isPoisonous: false, imageUrl: './assets/images/kumanomi_real.jpg' }
         ];
         return creatureData;
     }
@@ -53,6 +53,12 @@ function updateScore(points) {
 
     if (currentScore >= SCORE_TO_WIN) {
         endGame(true); // 胜利
+    }
+    
+    // 确保分数不会低于0
+    if (currentScore < 0) {
+        currentScore = 0;
+        scoreDisplay.textContent = currentScore;
     }
 }
 
@@ -89,6 +95,9 @@ function handleCreatureClick(event) {
         updateScore(-10);
         // 🚨 视觉反馈和科普提示
         event.target.classList.add('is-poisonous-feedback');
+        setTimeout(() => {
+            event.target.classList.remove('is-poisonous-feedback');
+        }, 300);
         alert(`🚨 -10分！这是 ${creatureName}！请不要触碰！`); // 实际游戏中用更优雅的Toast或模态框
     } else {
         updateScore(5);
