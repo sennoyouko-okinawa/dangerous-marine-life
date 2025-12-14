@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冲绳海洋毒物挑战 - 🐍🌊</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>冲绳海洋有毒生物科普挑战</h1>
+        <p>目标：点击**无毒**生物，达到 100 分即可通关！</p>
+    </header>
+
+    <div id="game-info">
+        <div class="score-container">
+            <h2>スコア (分数)：</h2>
+            <span id="score-display">0</span>
+        </div>
+        <div class="timer-container">
+            <h2>残り時間 (剩余时间)：</h2>
+            <span id="timer-display">--</span>
+        </div>
+    </div>
+
+    <div id="game-area">
+    </div>
+
+    <div id="message-box" class="hidden">
+        <h3 id="message-text"></h3>
+        <p id="sub-text"></p>
+        <button id="start-button">ゲーム開始 (开始游戏)</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
