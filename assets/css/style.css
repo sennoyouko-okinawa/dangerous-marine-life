@@ -2,43 +2,45 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff;
-    /* 浅蓝色背景，海洋主题 */
+    background-color: #fff0f5;
+    /* 柔和的粉红色背景 */
     color: #333;
     text-align: center;
 }
 
 header {
-    background-color: #1e90ff;
-    /* 蓝色标题栏 */
-    color: white;
+    background-color: #98fb98;
+    /* 柔和的粉绿色标题栏 */
+    color: #333;
     padding: 10px 0;
 }
 
 #game-info {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     padding: 10px;
-    background-color: #add8e6;
-    /* 浅一点的蓝色 */
+    background-color: #e0ffe0;
+    /* 更浅的粉绿色 */
 }
 
 #score-display {
     font-size: 2em;
     font-weight: bold;
-    color: #d9534f;
-    /* 红色醒目分数 */
+    color: #ff69b4;
+    /* 热情的粉红色 */
 }
 
-#game-controls {
-    padding: 10px;
+.controls-container {
+    flex-grow: 1;
 }
 
 .control-button {
-    background-color: #1e90ff;
-    color: white;
+    background-color: #98fb98;
+    /* 柔和的粉绿色 */
+    color: #333;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
@@ -46,7 +48,8 @@ header {
 }
 
 .control-button:hover {
-    background-color: #007bff;
+    background-color: #66cc66;
+    /* 稍深的绿色 */
 }
 
 #game-area {
@@ -56,7 +59,7 @@ header {
     height: 70vh;
     /* 占据视口大部分高度 */
     margin: 20px auto;
-    border: 3px dashed #007bff;
+    border: 3px dashed #98fb98;
     background-color: #ffffff;
     overflow: hidden;
     /* 确保图片不溢出 */
@@ -107,18 +110,21 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 182, 193, 0.7);
+    /* 半透明粉红色遮罩 */
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #333;
     font-size: 2em;
+    font-weight: bold;
     z-index: 10;
 }
 
 /* 🚨 有毒生物被点击时的短暂视觉反馈 */
 .is-poisonous-feedback {
-    border-color: red !important;
+    border-color: #ff69b4 !important;
+    /* 粉红色边框 */
     animation: flash-red 0.3s;
 }
 
@@ -128,7 +134,7 @@ header {
     }
 
     50% {
-        border-color: red;
+        border-color: #ff69b4;
         transform: scale(1.1);
     }
 
