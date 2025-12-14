@@ -17,7 +17,7 @@ header {
 
 #game-info {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
     background-color: #e0ffe0;
@@ -33,6 +33,7 @@ header {
 
 .controls-container {
     flex-grow: 1;
+    text-align: center;
 }
 
 .control-button {

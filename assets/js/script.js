@@ -77,7 +77,7 @@ function togglePause() {
     if (isPaused) {
         // 暂停游戏
         clearInterval(gameTimer);
-        pauseButton.textContent = "再開 (继续)";
+        pauseButton.textContent = "再開";
         
         // 添加暂停遮罩
         const pauseOverlay = document.createElement('div');
@@ -87,7 +87,7 @@ function togglePause() {
         gameArea.appendChild(pauseOverlay);
     } else {
         // 继续游戏
-        pauseButton.textContent = "一時停止 (暂停)";
+        pauseButton.textContent = "一時停止";
         
         // 移除暂停遮罩
         const pauseOverlay = document.getElementById('paused-overlay');
@@ -112,7 +112,7 @@ function endGame(isWin) {
     gameArea.innerHTML = ''; // 清空所有图片
 
     messageBox.classList.remove('hidden');
-    document.getElementById('start-button').textContent = "再チャレンジ (再试一次)";
+    document.getElementById('start-button').textContent = "再チャレンジ";
 
     if (isWin) {
         document.getElementById('message-text').textContent = "🎉 通关成功！海洋探险家！";
@@ -244,7 +244,7 @@ async function startGame() {
     gameArea.innerHTML = ''; // 清空图片
     pauseButton.classList.remove('hidden'); // 显示暂停按钮
     isPaused = false; // 确保游戏未暂停
-    pauseButton.textContent = "一時停止 (暂停)"; // 设置按钮文本
+    pauseButton.textContent = "一時停止"; // 设置按钮文本
 
     // 启动核心计时器
     gameTimer = setInterval(spawnCreatures, TIME_INTERVAL);
@@ -265,4 +265,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     POISONOUS_CREATURES = creatureData.filter(c => c.isPoisonous);
     HARMLESS_CREATURES = creatureData.filter(c => !c.isPoisonous);
     document.getElementById('message-text').textContent = "点击开始，在冲绳的海洋里找出无毒的生物吧！";
+    
+    // 确保暂停按钮初始状态正确
+    pauseButton.classList.add('hidden');
 });
