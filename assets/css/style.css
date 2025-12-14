@@ -3,14 +3,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: #fff0f5;
-    /* 柔和的粉红色背景 */
+    /* 柔らかいピンク色の背景 */
     color: #333;
     text-align: center;
 }
 
 header {
     background-color: #b5f6b5;
-    /* 柔和的粉绿色标题栏 */
+    /* 柔らかい薄緑色のヘッダー */
     color: #333;
     padding: 10px 0;
 }
@@ -21,14 +21,14 @@ header {
     align-items: center;
     padding: 10px;
     background-color: #e0ffe0;
-    /* 更浅的粉绿色 */
+    /* より薄い薄緑色 */
 }
 
 #score-display {
     font-size: 2em;
     font-weight: bold;
     color: #ff69b4;
-    /* 热情的粉红色 */
+    /* 鮮やかなピンク色 */
 }
 
 .controls-container {
@@ -38,7 +38,7 @@ header {
 
 .control-button {
     background-color: #98fb98;
-    /* 柔和的粉绿色 */
+    /* 柔らかい薄緑色 */
     color: #333;
     border: none;
     padding: 10px 20px;
@@ -46,29 +46,29 @@ header {
     border-radius: 5px;
     cursor: pointer;
     margin: 0 5px;
-    min-width: 100px; /* 确保按钮最小宽度 */
-    display: inline-block; /* 确保按钮作为内联块显示 */
+    min-width: 100px; /* ボタンの最小幅を確保 */
+    display: inline-block; /* ボタンがインラインブロックとして正しく表示されるようにする */
 }
 
 .control-button:hover {
     background-color: #54b154;
-    /* 稍深的绿色 */
+    /* 少し濃い緑色 */
 }
 
 #game-area {
-    /* 核心游戏区域：图片将在此区域内随机定位 */
+    /* コアゲームエリア：画像はこのエリア内でランダムに配置される */
     position: relative;
     width: 90vw;
     height: 70vh;
-    /* 占据视口大部分高度 */
+    /* ビューポートの大部分の高さを占める */
     margin: 20px auto;
     border: 3px dashed #98fb98;
     background-color: #ffffff;
     overflow: hidden;
-    /* 确保图片不溢出 */
+    /* 画像がはみ出さないようにする */
 }
 
-/* 开始界面 */
+/* スタート画面 */
 #start-screen {
     position: fixed;
     top: 50%;
@@ -92,29 +92,29 @@ header {
     background-color: #54b154;
 }
 
-/* 动态生成的图片元素样式 */
+/* 動的に生成される画像要素のスタイル */
 .creature {
     position: absolute;
     width: 120px;
-    /* 图片大小 */
+    /* 画像サイズ */
     height: 120px;
     border-radius: 50%;
-    /* 圆形图片 */
+    /* 円形画像 */
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.1s ease-out;
     background-size: cover;
-    /* 确保图片覆盖整个元素 */
+    /* 画像が要素全体をカバーするようにする */
     background-position: center;
     border: 4px solid transparent;
-    /* 默认无边框 */
+    /* デフォルトでは枠線なし */
 }
 
 .creature:hover {
     transform: scale(1.05);
 }
 
-/* 提示框样式 */
+/* メッセージボックスのスタイル */
 #message-box {
     position: fixed;
     top: 50%;
@@ -138,7 +138,7 @@ header {
     width: 100%;
     height: 100%;
     background-color: rgba(255, 182, 193, 0.7);
-    /* 半透明粉红色遮罩 */
+    /* 半透明のピンク色オーバーレイ */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,10 +148,10 @@ header {
     z-index: 10;
 }
 
-/* 🚨 有毒生物被点击时的短暂视觉反馈 */
+/* 🚨 有毒生物がクリックされたときの瞬間的な視覚フィードバック */
 .is-poisonous-feedback {
     border-color: #ff69b4 !important;
-    /* 粉红色边框 */
+    /* ピンク色の枠線 */
     animation: flash-red 0.3s;
 }
 

@@ -1,5 +1,5 @@
 // =======================================================
-// A. 基础数据和元素引用
+// A. 基本データと要素参照
 // =======================================================
 
 const SCORE_TO_WIN = 100;
@@ -16,7 +16,7 @@ let gameTimer = null;
 let creatureData = [];
 let isPaused = false;
 
-// 异步加载JSON数据
+// 非同期でJSONデータを読み込む
 async function loadCreatureData() {
     try {
         const response = await fetch('./assets/js/marine_creatures.json');
@@ -24,8 +24,8 @@ async function loadCreatureData() {
         creatureData = data.marineCreatures;
         return creatureData;
     } catch (error) {
-        console.error('无法加载海洋生物数据:', error);
-        // 如果加载失败，则使用默认数据
+        console.error('海洋生物データの読み込みに失敗しました:', error);
+        // 読み込みに失敗した場合、デフォルトデータを使用
         creatureData = [
             { id: 1, name: "ハブクラゲ", isPoisonous: true, imageUrl: './assets/images/habukura.jpg' },
             { id: 2, name: "ヒョウモンダコ", isPoisonous: true, imageUrl: './assets/images/hyoumodako.jpg' },
@@ -38,30 +38,30 @@ async function loadCreatureData() {
     }
 }
 
-// 优化：将数据分离为有毒和无毒列表，方便随机选取
+// 最適化：データを有毒と無毒のリストに分離し、ランダム選択を容易にする
 let POISONOUS_CREATURES = [];
 let HARMLESS_CREATURES = [];
 
 // =======================================================
-// B. 核心游戏函数
+// B. コアゲーム関数
 // =======================================================
 
 /**
  * @function updateScore
- * 更新分数并在达到目标时结束游戏
+ * スコアを更新し、目標に達成したらゲームを終了する
  */
 function updateScore(points) {
-    // 如果游戏已暂停，则不处理分数更新
+    // ゲームが一時停止中の場合はスコア更新を行わない
     if (isPaused) return;
     
     currentScore += points;
     scoreDisplay.textContent = currentScore;
 
     if (currentScore >= SCORE_TO_WIN) {
-        endGame(true); // 胜利
+        endGame(true); // 勝利
     }
     
-    // 确保分数不会低于0
+    // スコアが0未満にならないようにする
     if (currentScore < 0) {
         currentScore = 0;
         scoreDisplay.textContent = currentScore;
@@ -70,111 +70,111 @@ function updateScore(points) {
 
 /**
  * @function togglePause
- * 切换游戏暂停/继续状态
+ * ゲームの一時停止/再開状態を切り替える
  */
 function togglePause() {
     isPaused = !isPaused;
     
     if (isPaused) {
-        // 暂停游戏
+        // ゲームを一時停止
         clearInterval(gameTimer);
         pauseButton.textContent = "再開";
         
-        // 添加暂停遮罩
+        // 一時停止オーバーレイを追加
         const pauseOverlay = document.createElement('div');
         pauseOverlay.className = 'paused-overlay';
         pauseOverlay.id = 'paused-overlay';
         pauseOverlay.textContent = 'PAUSED';
         gameArea.appendChild(pauseOverlay);
     } else {
-        // 继续游戏
+        // ゲームを再開
         pauseButton.textContent = "一時停止";
         
-        // 移除暂停遮罩
+        // 一時停止オーバーレイを削除
         const pauseOverlay = document.getElementById('paused-overlay');
         if (pauseOverlay) {
             pauseOverlay.remove();
         }
         
-        // 重新启动计时器
+        // タイマーを再起動
         gameTimer = setInterval(spawnCreatures, TIME_INTERVAL);
     }
 }
 
 /**
  * @function endGame
- * 停止计时器并显示通关或失败信息
+ * タイマーを停止し、クリアまたは失敗メッセージを表示
  */
 function endGame(isWin) {
     clearInterval(gameTimer);
-    isPaused = false; // 确保游戏结束时取消暂停状态
+    isPaused = false; // ゲーム終了時に一時停止状態を解除
     
-    // 禁用暂停按钮
+    // 一時停止ボタンを無効化
     pauseButton.disabled = true;
     
-    gameArea.innerHTML = ''; // 清空所有图片
+    gameArea.innerHTML = ''; // すべての画像をクリア
 
-    // 隐藏开始界面，显示消息框
+    // スタート画面を非表示にし、メッセージボックスを表示
     startScreen.classList.add('hidden');
     messageBox.classList.remove('hidden');
     
-    document.getElementById('start-button').textContent = "再チャレンジ";
+    document.getElementById('start-button').textContent = "もう一度";
 
     if (isWin) {
-        document.getElementById('message-text').textContent = "🎉 通关成功！海洋探险家！";
-        document.getElementById('sub-text').textContent = "您成功区分了有毒和无毒生物，安全意识很棒！";
+        document.getElementById('message-text').textContent = "🎉 クリアおめでとう！海洋探検家！";
+        document.getElementById('sub-text').textContent = "有毒と無毒の生物を見分けられて素晴らしい！安全意識が高いね！";
     } else {
-        // ... 可以设置其他失败条件，例如时间到
+        // ... タイムアップなどの他の失敗条件を設定可能
     }
 }
 
 /**
  * @function handleCreatureClick
- * 处理图片点击事件的逻辑
+ * 画像クリックイベントの処理ロジック
  */
 function handleCreatureClick(event) {
-    // 如果游戏已暂停，则不处理点击
+    // ゲームが一時停止中の場合はクリックを処理しない
     if (isPaused) return;
     
-    // 从点击的元素上获取其携带的数据（isPoisonous）
+    // クリックされた要素からデータ（isPoisonous）を取得
     const isPoisonous = event.target.dataset.poisonous === 'true';
     const creatureName = event.target.dataset.name;
 
-    // 1. 计分逻辑
+    // 1. スコア処理ロジック
     if (isPoisonous) {
         updateScore(-10);
-        // 🚨 视觉反馈和科普提示
+        // 🚨 視覚フィードバックと科学知識のヒント
         event.target.classList.add('is-poisonous-feedback');
         setTimeout(() => {
             event.target.classList.remove('is-poisonous-feedback');
         }, 300);
-        alert(`🚨 -10分！这是 ${creatureName}！请不要触碰！`); // 实际游戏中用更优雅的Toast或模态框
+        alert(`🚨 -10点！これは ${creatureName} です！触らないで！`); // 実際のゲームではよりエレガントなトーストやモーダルを使用
     } else {
         updateScore(5);
-        // 移除被点击的无毒生物
+        // クリックされた無毒生物を削除
         event.target.remove();
     }
 }
 
 /**
  * @function createCreatureElement
- * 创建一个图片元素并设置其属性和定位
+ * 画像要素を作成し、そのプロパティと配置を設定
  */
 function createCreatureElement(creature) {
     const el = document.createElement('div');
     el.className = 'creature';
     
-    // 设置图片背景和数据属性
+    // 画像背景とデータ属性を設定
     el.style.backgroundImage = `url(${creature.imageUrl})`;
     el.dataset.poisonous = creature.isPoisonous;
     el.dataset.name = creature.name;
     
-    // 随机定位
+    // ランダム配置
     const gameAreaWidth = gameArea.clientWidth;
     const gameAreaHeight = gameArea.clientHeight;
-    // 确保图片不会部分溢出
-    const safeX = Math.random() * (gameAreaWidth - 120); // 120 是 .creature 的宽度
-    const safeY = Math.random() * (gameAreaHeight - 120); // 120 是 .creature 的高度
+    // 画像が部分的にはみ出さないようにする
+    const safeX = Math.random() * (gameAreaWidth - 120); // 120 は .creature の幅
+    const safeY = Math.random() * (gameAreaHeight - 120); // 120 は .creature の高さ
 
     el.style.left = `${safeX}px`;
     el.style.top = `${safeY}px`;
@@ -185,16 +185,16 @@ function createCreatureElement(creature) {
 
 /**
  * @function spawnCreatures
- * 随机生成并显示 3-4 个生物图片 (1-2 有毒, 1-2 无毒)
+ * ランダムに 3-4 個の生物画像を生成・表示 (1-2 個有毒, 1-2 個無毒)
  */
 function spawnCreatures() {
-    // 如果游戏已暂停，则不生成新生物
+    // ゲームが一時停止中の場合は新しい生物を生成しない
     if (isPaused) return;
     
-    // 清空游戏区，开始新一轮显示
+    // ゲームエリアをクリアし、新しいラウンドを開始
     gameArea.innerHTML = '';
     
-    // 如果处于暂停状态，重新添加暂停遮罩
+    // 一時停止状態の場合、一時停止オーバーレイを再追加
     if (isPaused) {
         const pauseOverlay = document.createElement('div');
         pauseOverlay.className = 'paused-overlay';
@@ -204,28 +204,28 @@ function spawnCreatures() {
         return;
     }
 
-    // 1. 确保每次至少有 1 个无毒生物
-    const numHarmless = 1 + Math.floor(Math.random() * 2); // 1 或 2 个无毒
-    const numPoisonous = 1 + Math.floor(Math.random() * 2); // 1 或 2 个有毒
+    // 1. 毎回少なくとも 1 個の無毒生物を確保
+    const numHarmless = 1 + Math.floor(Math.random() * 2); // 1 または 2 個の無毒
+    const numPoisonous = 1 + Math.floor(Math.random() * 2); // 1 または 2 個の有毒
 
     let creaturesToSpawn = [];
 
-    // 2. 随机选取 无毒生物
+    // 2. 無毒生物をランダムに選択
     for (let i = 0; i < numHarmless; i++) {
         const randomIndex = Math.floor(Math.random() * HARMLESS_CREATURES.length);
         creaturesToSpawn.push(HARMLESS_CREATURES[randomIndex]);
     }
 
-    // 3. 随机选取 有毒生物
+    // 3. 有毒生物をランダムに選択
     for (let i = 0; i < numPoisonous; i++) {
         const randomIndex = Math.floor(Math.random() * POISONOUS_CREATURES.length);
         creaturesToSpawn.push(POISONOUS_CREATURES[randomIndex]);
     }
 
-    // 4. 打乱顺序 (可选，但推荐)
+    // 4. 順序をシャッフル (オプションだが推奨)
     creaturesToSpawn.sort(() => Math.random() - 0.5);
 
-    // 5. 渲染到页面
+    // 5. ページにレンダリング
     creaturesToSpawn.forEach(creature => {
         const el = createCreatureElement(creature);
         gameArea.appendChild(el);
@@ -234,10 +234,10 @@ function spawnCreatures() {
 
 /**
  * @function startGame
- * 初始化游戏状态并启动计时器
+ * ゲーム状態を初期化し、タイマーを起動
  */
 async function startGame() {
-    // 如果还没有加载数据，则先加载
+    // データがまだ読み込まれていない場合は先に読み込む
     if (creatureData.length === 0) {
         await loadCreatureData();
         POISONOUS_CREATURES = creatureData.filter(c => c.isPoisonous);
@@ -247,41 +247,41 @@ async function startGame() {
     currentScore = 0;
     scoreDisplay.textContent = currentScore;
     
-    // 隐藏开始界面和消息框，显示游戏区域
+    // スタート画面とメッセージボックスを非表示にし、ゲームエリアを表示
     startScreen.classList.add('hidden');
     messageBox.classList.add('hidden');
     
-    gameArea.innerHTML = ''; // 清空图片
+    gameArea.innerHTML = ''; // 画像をクリア
     
-    // 启用暂停按钮
+    // 一時停止ボタンを有効化
     pauseButton.disabled = false;
     
-    isPaused = false; // 确保游戏未暂停
-    pauseButton.textContent = "一時停止"; // 设置按钮文本
+    isPaused = false; // ゲームが一時停止していないことを確認
+    pauseButton.textContent = "一時停止"; // ボタンテキストを設定
 
-    // 启动核心计时器
+    // コアタイマーを起動
     gameTimer = setInterval(spawnCreatures, TIME_INTERVAL);
 
-    // 立即运行一次，以便游戏开始时屏幕上有图片
+    // ゲーム開始時に画面上に画像があるようすぐに1回実行
     spawnCreatures();
 }
 
 // =======================================================
-// C. 启动事件
+// C. 起動イベント
 // =======================================================
 startButton.addEventListener('click', startGame);
 pauseButton.addEventListener('click', togglePause);
 
-// 游戏加载时显示初始启动界面
+// ゲーム読み込み時に初期起動画面を表示
 document.addEventListener('DOMContentLoaded', async () => {
     await loadCreatureData();
     POISONOUS_CREATURES = creatureData.filter(c => c.isPoisonous);
     HARMLESS_CREATURES = creatureData.filter(c => !c.isPoisonous);
-    document.getElementById('message-text').textContent = "点击开始，在冲绳的海洋里找出无毒的生物吧！";
+    document.getElementById('message-text').textContent = "スタートをクリックして、沖縄の海で無毒な生物を見つけよう！";
     
-    // 初始化暂停按钮状态
+    // 一時停止ボタンの初期状態を設定
     pauseButton.disabled = true;
     
-    // 确保开始界面可见
+    // スタート画面が表示されるようにする
     startScreen.classList.remove('hidden');
 });
