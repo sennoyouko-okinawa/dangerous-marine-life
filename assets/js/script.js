@@ -8,10 +8,12 @@ const scoreDisplay = document.getElementById('score-display');
 const gameArea = document.getElementById('game-area');
 const messageBox = document.getElementById('message-box');
 const startButton = document.getElementById('start-button');
+const pauseButton = document.getElementById('pause-button');
 
 let currentScore = 0;
 let gameTimer = null;
 let creatureData = [];
+let isPaused = false;
 
 // 异步加载JSON数据
 async function loadCreatureData() {
@@ -48,6 +50,9 @@ let HARMLESS_CREATURES = [];
  * 更新分数并在达到目标时结束游戏
  */
 function updateScore(points) {
+    // 如果游戏已暂停，则不处理分数更新
+    if (isPaused) return;
+    
     currentScore += points;
     scoreDisplay.textContent = currentScore;
 
@@ -63,11 +68,47 @@ function updateScore(points) {
 }
 
 /**
+ * @function togglePause
+ * 切换游戏暂停/继续状态
+ */
+function togglePause() {
+    isPaused = !isPaused;
+    
+    if (isPaused) {
+        // 暂停游戏
+        clearInterval(gameTimer);
+        pauseButton.textContent = "再開 (继续)";
+        
+        // 添加暂停遮罩
+        const pauseOverlay = document.createElement('div');
+        pauseOverlay.className = 'paused-overlay';
+        pauseOverlay.id = 'paused-overlay';
+        pauseOverlay.textContent = 'PAUSED';
+        gameArea.appendChild(pauseOverlay);
+    } else {
+        // 继续游戏
+        pauseButton.textContent = "一時停止 (暂停)";
+        
+        // 移除暂停遮罩
+        const pauseOverlay = document.getElementById('paused-overlay');
+        if (pauseOverlay) {
+            pauseOverlay.remove();
+        }
+        
+        // 重新启动计时器
+        gameTimer = setInterval(spawnCreatures, TIME_INTERVAL);
+    }
+}
+
+/**
  * @function endGame
  * 停止计时器并显示通关或失败信息
  */
 function endGame(isWin) {
     clearInterval(gameTimer);
+    isPaused = false; // 确保游戏结束时取消暂停状态
+    pauseButton.classList.add('hidden'); // 隐藏暂停按钮
+    
     gameArea.innerHTML = ''; // 清空所有图片
 
     messageBox.classList.remove('hidden');
@@ -86,6 +127,9 @@ function endGame(isWin) {
  * 处理图片点击事件的逻辑
  */
 function handleCreatureClick(event) {
+    // 如果游戏已暂停，则不处理点击
+    if (isPaused) return;
+    
     // 从点击的元素上获取其携带的数据（isPoisonous）
     const isPoisonous = event.target.dataset.poisonous === 'true';
     const creatureName = event.target.dataset.name;
@@ -138,8 +182,21 @@ function createCreatureElement(creature) {
  * 随机生成并显示 3-4 个生物图片 (1-2 有毒, 1-2 无毒)
  */
 function spawnCreatures() {
+    // 如果游戏已暂停，则不生成新生物
+    if (isPaused) return;
+    
     // 清空游戏区，开始新一轮显示
     gameArea.innerHTML = '';
+    
+    // 如果处于暂停状态，重新添加暂停遮罩
+    if (isPaused) {
+        const pauseOverlay = document.createElement('div');
+        pauseOverlay.className = 'paused-overlay';
+        pauseOverlay.id = 'paused-overlay';
+        pauseOverlay.textContent = 'PAUSED';
+        gameArea.appendChild(pauseOverlay);
+        return;
+    }
 
     // 1. 确保每次至少有 1 个无毒生物
     const numHarmless = 1 + Math.floor(Math.random() * 2); // 1 或 2 个无毒
@@ -185,6 +242,9 @@ async function startGame() {
     scoreDisplay.textContent = currentScore;
     messageBox.classList.add('hidden'); // 隐藏开始/结果框
     gameArea.innerHTML = ''; // 清空图片
+    pauseButton.classList.remove('hidden'); // 显示暂停按钮
+    isPaused = false; // 确保游戏未暂停
+    pauseButton.textContent = "一時停止 (暂停)"; // 设置按钮文本
 
     // 启动核心计时器
     gameTimer = setInterval(spawnCreatures, TIME_INTERVAL);
@@ -197,6 +257,7 @@ async function startGame() {
 // C. 启动事件
 // =======================================================
 startButton.addEventListener('click', startGame);
+pauseButton.addEventListener('click', togglePause);
 
 // 游戏加载时显示初始启动界面
 document.addEventListener('DOMContentLoaded', async () => {
