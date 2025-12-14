@@ -107,7 +107,9 @@ function togglePause() {
 function endGame(isWin) {
     clearInterval(gameTimer);
     isPaused = false; // 确保游戏结束时取消暂停状态
-    pauseButton.classList.add('hidden'); // 隐藏暂停按钮
+    
+    // 禁用暂停按钮
+    pauseButton.disabled = true;
     
     gameArea.innerHTML = ''; // 清空所有图片
 
@@ -242,7 +244,10 @@ async function startGame() {
     scoreDisplay.textContent = currentScore;
     messageBox.classList.add('hidden'); // 隐藏开始/结果框
     gameArea.innerHTML = ''; // 清空图片
-    pauseButton.classList.remove('hidden'); // 显示暂停按钮
+    
+    // 启用暂停按钮
+    pauseButton.disabled = false;
+    
     isPaused = false; // 确保游戏未暂停
     pauseButton.textContent = "一時停止"; // 设置按钮文本
 
@@ -266,6 +271,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     HARMLESS_CREATURES = creatureData.filter(c => !c.isPoisonous);
     document.getElementById('message-text').textContent = "点击开始，在冲绳的海洋里找出无毒的生物吧！";
     
-    // 确保暂停按钮初始状态正确
-    pauseButton.classList.add('hidden');
+    // 初始化暂停按钮状态
+    pauseButton.disabled = true;
 });

@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background-color: #98fb98;
+    background-color: #b5f6b5;
     /* 柔和的粉绿色标题栏 */
     color: #333;
     padding: 10px 0;
@@ -41,15 +41,17 @@ header {
     /* 柔和的粉绿色 */
     color: #333;
     border: none;
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 5px;
+    min-width: 100px; /* 确保按钮最小宽度 */
+    display: inline-block; /* 确保按钮作为内联块显示 */
 }
 
 .control-button:hover {
-    background-color: #66cc66;
+    background-color: #54b154;
     /* 稍深的绿色 */
 }
 
