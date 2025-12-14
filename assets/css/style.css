@@ -68,6 +68,30 @@ header {
     /* 确保图片不溢出 */
 }
 
+/* 开始界面 */
+#start-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+#start-button {
+    background-color: #98fb98;
+    color: #333;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+#start-button:hover {
+    background-color: #54b154;
+}
+
 /* 动态生成的图片元素样式 */
 .creature {
     position: absolute;

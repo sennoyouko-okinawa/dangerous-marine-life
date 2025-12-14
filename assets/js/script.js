@@ -7,6 +7,7 @@ const TIME_INTERVAL = 4000; // 4秒
 const scoreDisplay = document.getElementById('score-display');
 const gameArea = document.getElementById('game-area');
 const messageBox = document.getElementById('message-box');
+const startScreen = document.getElementById('start-screen');
 const startButton = document.getElementById('start-button');
 const pauseButton = document.getElementById('pause-button');
 
@@ -113,7 +114,10 @@ function endGame(isWin) {
     
     gameArea.innerHTML = ''; // 清空所有图片
 
+    // 隐藏开始界面，显示消息框
+    startScreen.classList.add('hidden');
     messageBox.classList.remove('hidden');
+    
     document.getElementById('start-button').textContent = "再チャレンジ";
 
     if (isWin) {
@@ -242,7 +246,11 @@ async function startGame() {
     
     currentScore = 0;
     scoreDisplay.textContent = currentScore;
-    messageBox.classList.add('hidden'); // 隐藏开始/结果框
+    
+    // 隐藏开始界面和消息框，显示游戏区域
+    startScreen.classList.add('hidden');
+    messageBox.classList.add('hidden');
+    
     gameArea.innerHTML = ''; // 清空图片
     
     // 启用暂停按钮
@@ -273,4 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 初始化暂停按钮状态
     pauseButton.disabled = true;
+    
+    // 确保开始界面可见
+    startScreen.classList.remove('hidden');
 });
